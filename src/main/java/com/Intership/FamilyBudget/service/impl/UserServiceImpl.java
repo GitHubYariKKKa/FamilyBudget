@@ -1,10 +1,12 @@
 package com.Intership.FamilyBudget.service.impl;
 
+import com.Intership.FamilyBudget.dto.SortedUsersBySpendingDTO;
 import com.Intership.FamilyBudget.model.User;
 import com.Intership.FamilyBudget.repository.UserRepository;
 import com.Intership.FamilyBudget.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,5 +79,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllOrderedByBudget(int family_id) {
         List<User> users = userRepository.findUserByFamilyIdOrderByBudget(family_id);
         return users.isEmpty() ? new ArrayList<>() : users;
+    }
+
+    @Override
+    public List<SortedUsersBySpendingDTO> getSortedUsersBySpending(LocalDate startDate, LocalDate endDate) {
+        List<SortedUsersBySpendingDTO> sortedUsersBySpendingDTOS = userRepository.findUserBySpending(startDate, endDate);
+        return sortedUsersBySpendingDTOS.isEmpty() ? new ArrayList<>() : sortedUsersBySpendingDTOS;
     }
 }
