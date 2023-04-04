@@ -13,24 +13,24 @@ import java.util.Optional;
 @Repository
 public interface ShoppingHistoryRepository extends JpaRepository<ShoppingHistory, Integer> {
     @Query("select sh from ShoppingHistory sh " +
-            "join sh.users u " +
-            "where :user member of sh.users")
-    Optional<ShoppingHistory> findShoppingHistoriesByUser(@Param("user")User user);
+            "join sh.user u " +
+            "where u.id = :user_id")
+    Optional<ShoppingHistory> findShoppingHistoriesByUser(@Param("user")int user_id);
 
     @Query("select sh from ShoppingHistory sh " +
-            "join sh.users u " +
+            "join sh.user u " +
             "join u.family fm " +
             "where sh.id = :id ")
     ShoppingHistory findShoppingHistoryByIdInThisFamily(@Param("id") int id);
 
     @Query("select sh from ShoppingHistory sh " +
-            "join sh.users u " +
+            "join sh.user u " +
             "join u.family fm " +
             "where sh.productName = :name ")
     ShoppingHistory findShoppingHistoryByNameInThisFamily(@Param("name") String name);
 
     @Query("select sh from ShoppingHistory sh " +
-            "join sh.users u " +
+            "join sh.user u " +
             "join u.family fm " +
             "where fm.id = :family_id ")
     List<ShoppingHistory> findAllShoppingInFamily(@Param("family_id") int family_id);

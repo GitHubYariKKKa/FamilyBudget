@@ -19,14 +19,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "sur_name", nullable = false)
+    @Column(name = "sur_name")
     private String surName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "address")
+    private String Address;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -45,8 +51,12 @@ public class User {
     @JoinColumn(name = "family_id")
     private Family family;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "user")
     private List<ShoppingHistory> shoppingHistory;
+
+    public String getUsername() {
+        return email;
+    }
 
     @Override
     public boolean equals(Object o) {

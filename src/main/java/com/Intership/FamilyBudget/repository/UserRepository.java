@@ -15,11 +15,21 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-    Optional<User> findUserByName(String name);
+    List<User> findUserByName(String name);
 
-    Optional<User> findUserByLastName(String lastName);
+    List<User> findUserByLastName(String lastName);
 
-    Optional<User> findUserBySurName(String surName);
+    List<User> findUserBySurName(String surName);
+
+    List<User> findUsersByNameAndSurName(String name, String surName);
+
+    User findUserByEmail(String email);
+
+    List<User> findUsersByNameAndLastName(String name, String lastName);
+
+    List<User> findUsersBySurNameAndLastName(String surName, String lastName);
+
+    List<User> findUsersByNameAndSurNameAndLastName(String name, String surName,String lastName);
 
     @Query("select u from User u " +
             "join u.shoppingHistory sh " +

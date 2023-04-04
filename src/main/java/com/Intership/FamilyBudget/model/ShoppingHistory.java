@@ -24,6 +24,7 @@ public class ShoppingHistory {
 
     private LocalDate buyDate;
 
-    @ManyToMany
-    private List<User> users;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

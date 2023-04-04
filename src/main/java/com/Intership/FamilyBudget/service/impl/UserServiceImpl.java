@@ -44,24 +44,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User readByName(String name) {
-        return userRepository.findUserByName(name).orElseThrow(
-                NullPointerException::new
-        );
+    public List<User> readByName(String name) {
+        return userRepository.findUserByName(name);
     }
 
     @Override
-    public User readByLastName(String surName) {
-        return userRepository.findUserBySurName(surName).orElseThrow(
-                NullPointerException::new
-        );
+    public List<User> readByLastName(String surName) {
+        return userRepository.findUserBySurName(surName);
     }
 
     @Override
-    public User readByThirdName(String lastName) {
-        return userRepository.findUserByLastName(lastName).orElseThrow(
-                NullPointerException::new
-        );
+    public List<User> readByThirdName(String lastName) {
+        return userRepository.findUserByLastName(lastName);
+    }
+
+    @Override
+    public List<User> readByNameAndSurName(String name, String surName) {
+        return userRepository.findUsersByNameAndSurName(name, surName);
+    }
+
+    @Override
+    public List<User> readByNameAndLastName(String name, String lastName) {
+        return userRepository.findUsersByNameAndLastName(name, lastName);
+    }
+
+    @Override
+    public List<User> readBySurNameAndLastName(String surName, String lastName) {
+        return userRepository.findUsersBySurNameAndLastName(surName,lastName);
+    }
+
+    @Override
+    public List<User> readByNameAndSurNameAndLastName(String name, String surName, String lastName) {
+        return userRepository.findUsersByNameAndSurNameAndLastName(name, surName, lastName);
     }
 
     @Override
@@ -70,7 +84,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll(int family_id) {
+    public List<User> getAll() {
+        List<User> users = userRepository.findAll();
+        return users.isEmpty() ? new ArrayList<>() : users;
+    }
+
+    @Override
+    public List<User> getAllByFamilyId(int family_id) {
         List<User> users = userRepository.findAllByFamilyId(family_id);
         return users.isEmpty() ? new ArrayList<>() : users;
     }
@@ -85,5 +105,12 @@ public class UserServiceImpl implements UserService {
     public List<SortedUsersBySpendingDTO> getSortedUsersBySpending(LocalDate startDate, LocalDate endDate) {
         List<SortedUsersBySpendingDTO> sortedUsersBySpendingDTOS = userRepository.findUserBySpending(startDate, endDate);
         return sortedUsersBySpendingDTOS.isEmpty() ? new ArrayList<>() : sortedUsersBySpendingDTOS;
+    }
+
+    @Override
+    public void removeUserFromThisFamily(int user_id) {
+        User user = readById(user_id);
+        user.setFamily(null);
+        userRepository.save(user);
     }
 }
