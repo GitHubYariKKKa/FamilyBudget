@@ -16,12 +16,9 @@ public class ShoppingRequestDTO {
 
     private LocalDate buyDate;
 
-    private User user;
-
     public ShoppingRequestDTO(ShoppingHistory shoppingHistory){
         productName = shoppingHistory.getProductName();
         price = shoppingHistory.getPrice();
         buyDate = shoppingHistory.getBuyDate();
-        user = shoppingHistory.getUser();
     }
 }

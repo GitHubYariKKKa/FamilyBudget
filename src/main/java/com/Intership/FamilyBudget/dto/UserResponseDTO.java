@@ -24,10 +24,11 @@ public class UserResponseDTO {
 
     private String email;
 
-    private String password;
-
     private int budget;
 
+    private String address;
+
+    private String phoneNumber;
     private Role role;
 
     private Family family;
@@ -40,9 +41,10 @@ public class UserResponseDTO {
         surName = user.getSurName();
         lastName = user.getLastName();
         email = user.getEmail();
-        password = user.getPassword();
         budget = user.getBudget();
         role = user.getRole();
+        address = user.getAddress();
+        phoneNumber = user.getPhoneNumber();
         family = user.getFamily();
         shoppingHistory = user.getShoppingHistory();
     }

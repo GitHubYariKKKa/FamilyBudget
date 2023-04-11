@@ -16,4 +16,12 @@ public class FamilyRequestDTO {
         name = family.getName();
         budget = family.getBudget();
     }
+
+    @Override
+    public String toString() {
+        return "FamilyRequestDTO{" +
+                "name='" + name + '\'' +
+                ", budget=" + budget +
+                '}';
+    }
 }
