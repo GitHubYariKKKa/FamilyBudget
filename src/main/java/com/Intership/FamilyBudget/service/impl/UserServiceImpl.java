@@ -102,8 +102,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SortedUsersBySpendingDTO> getSortedUsersBySpending(LocalDate startDate, LocalDate endDate) {
-        List<SortedUsersBySpendingDTO> sortedUsersBySpendingDTOS = userRepository.findUserBySpending(startDate, endDate);
+    public List<SortedUsersBySpendingDTO> getSortedUsersBySpending(LocalDate startDate, LocalDate endDate, int family_id) {
+        List<SortedUsersBySpendingDTO> sortedUsersBySpendingDTOS = userRepository.findUserBySpending(family_id);
         return sortedUsersBySpendingDTOS.isEmpty() ? new ArrayList<>() : sortedUsersBySpendingDTOS;
     }
 
@@ -113,4 +113,5 @@ public class UserServiceImpl implements UserService {
         user.setFamily(null);
         userRepository.save(user);
     }
+
 }

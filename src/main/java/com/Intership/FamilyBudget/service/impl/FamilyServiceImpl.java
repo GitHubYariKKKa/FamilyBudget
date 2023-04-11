@@ -6,6 +6,7 @@ import com.Intership.FamilyBudget.repository.FamilyRepository;
 import com.Intership.FamilyBudget.service.FamilyService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -67,5 +68,21 @@ public class FamilyServiceImpl implements FamilyService {
             }
         }
         return family;
+    }
+
+    @Override
+    public List<Family> getAll() {
+        List<Family> families = familyRepository.findAll();
+        return families.isEmpty() ? new ArrayList<>() : families;
+    }
+
+    @Override
+    public boolean checkBudget(int budget, int actualBudget) {
+        return (budget * 0.1) > actualBudget;
+    }
+
+    @Override
+    public Family getFamilyByShoppingId(int id) {
+        return familyRepository.getFamilyByShoppingHistoryId(id);
     }
 }

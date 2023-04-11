@@ -19,4 +19,10 @@ public interface FamilyRepository extends JpaRepository<Family, Integer> {
 
     Family findFamilyByName(String name);
 
+    @Query("select f from Family f " +
+            "join f.users u " +
+            "join u.shoppingHistory sh " +
+            "where sh.id = :id")
+    Family getFamilyByShoppingHistoryId(int id);
+
 }

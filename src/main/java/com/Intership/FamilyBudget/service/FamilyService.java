@@ -13,4 +13,7 @@ public interface FamilyService {
     void delete(int id);
     Family addUserToThisFamily(int family_id, User user);
     Family removeUserFromThisFamily(int family_id, int user_id);
+    List<Family> getAll();
+    boolean checkBudget(int budget, int actualBudget);
+    Family getFamilyByShoppingId(int id);
 }

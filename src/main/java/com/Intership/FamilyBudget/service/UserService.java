@@ -21,6 +21,6 @@ public interface UserService {
     List<User> getAll();
     List<User> getAllByFamilyId(int family_id);
     List<User> getAllOrderedByBudget(int family_id);
-    List<SortedUsersBySpendingDTO> getSortedUsersBySpending(LocalDate startDate,LocalDate endDate);
+    List<SortedUsersBySpendingDTO> getSortedUsersBySpending(LocalDate startDate,LocalDate endDate, int family_id);
     void removeUserFromThisFamily(int user_id);
 }

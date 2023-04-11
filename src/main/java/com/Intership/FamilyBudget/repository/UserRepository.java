@@ -1,6 +1,7 @@
 package com.Intership.FamilyBudget.repository;
 
 import com.Intership.FamilyBudget.dto.SortedUsersBySpendingDTO;
+import com.Intership.FamilyBudget.dto.SpendPerDayDTO;
 import com.Intership.FamilyBudget.model.Family;
 import com.Intership.FamilyBudget.model.ShoppingHistory;
 import com.Intership.FamilyBudget.model.User;
@@ -40,16 +41,21 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     List<User> findUserByFamilyIdOrderByBudget(int family_id);
 
-    List<User> findAllByFamilyId(int family_id);
+    @Query("select u from User u join u.family f where f.id=:family_id")
+    List<User> findAllByFamilyId(@Param("family_id")int family_id);
 
-    @Query("select new com.Intership.FamilyBudget.dto.SortedUsersBySpendingDTO(u.name,sum(sh.price)) from User u " +
-            "inner join u.shoppingHistory sh " +
-            "where sh.buyDate between :startDate and :endDate " +
-            "group by u.name, sh.buyDate")
-    List<SortedUsersBySpendingDTO> findUserBySpending(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query("select new com.Intership.FamilyBudget.dto.SortedUsersBySpendingDTO(u.name,sum(sh.price),sh.buyDate) from ShoppingHistory sh " +
+            "join User u on sh.user.id = u.id where u.family.id = :family_id and sh.isDone = false group by u.name, sh.buyDate")
+    List<SortedUsersBySpendingDTO> findUserBySpending( @Param("family_id") int family_id);
 
 
     /*
+
+    @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate,
+
+,@Param("family_id") int family_id
+"where u.family.id = :family_id " +
+            "and sh.buyDate between :startDate and :endDate group by u.name, sh.buyDate"
 
         @Query("select sum(sh.price) from ShoppingHistory sh" +
             " join sh.users u" +

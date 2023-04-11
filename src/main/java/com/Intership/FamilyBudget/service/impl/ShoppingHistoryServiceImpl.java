@@ -1,5 +1,6 @@
 package com.Intership.FamilyBudget.service.impl;
 
+import com.Intership.FamilyBudget.dto.SpendPerDayDTO;
 import com.Intership.FamilyBudget.model.ShoppingHistory;
 import com.Intership.FamilyBudget.repository.ShoppingHistoryRepository;
 import com.Intership.FamilyBudget.service.ShoppingHistoryService;
@@ -59,5 +60,19 @@ public class ShoppingHistoryServiceImpl implements ShoppingHistoryService {
     public List<ShoppingHistory> getAll(int family_id) {
         List<ShoppingHistory> shoppingHistories = shoppingHistoryRepository.findAllShoppingInFamily(family_id);
         return shoppingHistories.isEmpty() ? new ArrayList<>() : shoppingHistories;
+    }
+
+    @Override
+    public List<ShoppingHistory> getAllMyShopping(int user_id) {
+        List<ShoppingHistory> shoppingHistories = shoppingHistoryRepository.findShoppingHistoriesByUser(user_id);
+        return shoppingHistories.isEmpty() ? new ArrayList<>() : shoppingHistories;
+    }
+
+    @Override
+    public List<SpendPerDayDTO> getUsersSpendingPerDayStatistic(int user_id) {
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = LocalDate.now().minusDays(7);
+        List<SpendPerDayDTO> spendPerDayDTOs = shoppingHistoryRepository.findUserSendingPerDay(user_id,startDate,endDate);
+        return spendPerDayDTOs.isEmpty() ? new ArrayList<>() : spendPerDayDTOs;
     }
 }
