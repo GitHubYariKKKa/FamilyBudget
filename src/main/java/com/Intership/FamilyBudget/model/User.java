@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -19,21 +20,31 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Pattern(regexp = "[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(name = "name")
     private String name;
 
+    @Pattern(regexp = "[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(name = "sur_name")
     private String surName;
 
+    @Pattern(regexp = "[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(name = "last_name")
     private String lastName;
 
+    @Pattern(regexp = "\\+38\\d{10}",
+            message = "Must start with '+38' ")
     @Column(name = "phone_number")
     private String phoneNumber;
+
 
     @Column(name = "address")
     private String Address;
 
+    @Pattern(regexp = "[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", message = "Must be a valid e-mail address")
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -46,6 +57,13 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @Column(name = "postal_index", nullable = false)
+    private String postalIndex;
+
+    @Lob
+    @Column(name="profile_image", columnDefinition="mediumblob")
+    private byte[] profileImage;
 
     @ManyToOne
     @JoinColumn(name = "family_id")
