@@ -10,6 +10,7 @@ public interface UserService {
     User create(User user);
     User update(User user);
     User readById(int id);
+    User readByEmail(String email);
     List<User> readByName(String name);
     List<User> readByLastName(String lastName);
     List<User> readByThirdName(String thirdName);
@@ -19,8 +20,10 @@ public interface UserService {
     List<User> readByNameAndSurNameAndLastName(String name, String surName, String lastName);
     void delete(int id);
     List<User> getAll();
-    List<User> getAllByFamilyId(int family_id);
+    List<User> getAllOutOffFamily();
+    List<User> getAllInFamily(int family_id);
     List<User> getAllOrderedByBudget(int family_id);
     List<SortedUsersBySpendingDTO> getSortedUsersBySpending(LocalDate startDate,LocalDate endDate, int family_id);
     void removeUserFromThisFamily(int user_id);
+    void addUserToThisFamily(int user_id,int family_id);
 }

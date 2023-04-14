@@ -12,8 +12,10 @@ public interface ShoppingHistoryService {
     ShoppingHistory readByIdInThisFamily(int id);
     List<ShoppingHistory> readByBuyDate(LocalDate date);
     ShoppingHistory readByProductNameInThisFamily(String name);
+    ShoppingHistory readById(int id);
     void delete(int id);
     List<ShoppingHistory> getAll(int family_id);
     List<ShoppingHistory> getAllMyShopping(int user_id);
     List<SpendPerDayDTO> getUsersSpendingPerDayStatistic(int user_id);
+    void clearShopping(int user_id);
 }

@@ -9,6 +9,7 @@ import com.Intership.FamilyBudget.service.ShoppingHistoryService;
 import com.Intership.FamilyBudget.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ public class ShoppingController {
         this.familyService = familyService;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping({"/create/{forWho}"})
     public ResponseEntity<ShoppingResponseDTO> create(@PathVariable(value = "forWho") int forWho, @RequestBody ShoppingRequestDTO shoppingRequestDTO){
         System.out.println(shoppingRequestDTO);
@@ -44,6 +46,7 @@ public class ShoppingController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PatchMapping({"/update/shopping/{id}"})
     public ResponseEntity<ShoppingResponseDTO> update(@PathVariable(value = "id") int id) throws IOException {
         System.out.println(id);
@@ -64,6 +67,7 @@ public class ShoppingController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping({"/delete/{id}"})
     public void delete(@PathVariable(value = "id") int id){
         shoppingHistoryService.delete(id);

@@ -43,4 +43,7 @@ public interface ShoppingHistoryRepository extends JpaRepository<ShoppingHistory
             "and sh.buyDate between :startDate and :endDate" +
             " group by sh.buyDate")
     List<SpendPerDayDTO> findUserSendingPerDay(@Param("user_id") int user_id, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query("select sh from ShoppingHistory sh join sh.user u where u.id = :user_id")
+    List<ShoppingHistory> findShoppingHistoryByUserId(@Param("user_id") int user_id);
 }

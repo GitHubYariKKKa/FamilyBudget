@@ -1,7 +1,9 @@
 package com.Intership.FamilyBudget.service.impl;
 
 import com.Intership.FamilyBudget.dto.SortedUsersBySpendingDTO;
+import com.Intership.FamilyBudget.model.Family;
 import com.Intership.FamilyBudget.model.User;
+import com.Intership.FamilyBudget.repository.FamilyRepository;
 import com.Intership.FamilyBudget.repository.UserRepository;
 import com.Intership.FamilyBudget.service.UserService;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final FamilyRepository familyRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, FamilyRepository familyRepository) {
         this.userRepository = userRepository;
+        this.familyRepository = familyRepository;
     }
 
     @Override
@@ -41,6 +45,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElseThrow(
                 NullPointerException::new
         );
+    }
+
+    @Override
+    public User readByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
@@ -90,8 +99,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllByFamilyId(int family_id) {
-        List<User> users = userRepository.findAllByFamilyId(family_id);
+    public List<User> getAllOutOffFamily() {
+        List<User> users = userRepository.findAllOutOffFamily();
+        return users.isEmpty() ? new ArrayList<>() : users;
+    }
+
+    @Override
+    public List<User> getAllInFamily(int family_id) {
+        List<User> users = userRepository.findAllInFamily(family_id);
         return users.isEmpty() ? new ArrayList<>() : users;
     }
 
@@ -111,6 +126,14 @@ public class UserServiceImpl implements UserService {
     public void removeUserFromThisFamily(int user_id) {
         User user = readById(user_id);
         user.setFamily(null);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void addUserToThisFamily(int user_id, int family_id) {
+        User user = readById(user_id);
+        Family family = familyRepository.findById(family_id).orElseThrow(NullPointerException::new);
+        user.setFamily(family);
         userRepository.save(user);
     }
 

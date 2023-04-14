@@ -52,8 +52,13 @@ public class ShoppingHistoryServiceImpl implements ShoppingHistoryService {
     }
 
     @Override
+    public ShoppingHistory readById(int id) {
+        return shoppingHistoryRepository.findById(id).orElseThrow(NullPointerException::new);
+    }
+
+    @Override
     public void delete(int id) {
-        shoppingHistoryRepository.delete(readByIdInThisFamily(id));
+        shoppingHistoryRepository.delete(readById(id));
     }
 
     @Override
@@ -74,5 +79,13 @@ public class ShoppingHistoryServiceImpl implements ShoppingHistoryService {
         LocalDate startDate = LocalDate.now().minusDays(7);
         List<SpendPerDayDTO> spendPerDayDTOs = shoppingHistoryRepository.findUserSendingPerDay(user_id,startDate,endDate);
         return spendPerDayDTOs.isEmpty() ? new ArrayList<>() : spendPerDayDTOs;
+    }
+
+    @Override
+    public void clearShopping(int user_id) {
+        List<ShoppingHistory> shoppingHistories = shoppingHistoryRepository.findShoppingHistoryByUserId(user_id);
+        for (ShoppingHistory sh:shoppingHistories){
+            delete(sh.getId());
+        }
     }
 }

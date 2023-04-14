@@ -51,7 +51,7 @@ public class LoginController {
             String token = jwtTokenProvider.createToken(user);
 
             Map<Object, Object> response = new HashMap<>();
-            response.put("username", username);
+            response.put("userId", user.getId());
             response.put("token", token);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
