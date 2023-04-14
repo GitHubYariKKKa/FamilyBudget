@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -29,24 +30,9 @@ public class springConfig implements WebMvcConfigurer {
         return multipartResolver;
     }
 
-//    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter();
-//        converters.add(jacksonConverter);
-//
-//        ByteArrayHttpMessageConverter byteArrayConverter = new ByteArrayHttpMessageConverter();
-//        converters.add(byteArrayConverter);
-//
-//        FormHttpMessageConverter formConverter = new FormHttpMessageConverter();
-//        formConverter.setCharset(StandardCharsets.UTF_8);
-//        formConverter.setMultipartCharset(StandardCharsets.UTF_8);
-//        converters.add(formConverter);
-//    }
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8080")
-                .allowedMethods("GET", "POST", "PUT", "DELETE","PATCH");
+        registry.addMapping("/**").allowedMethods("*");
     }
+
 }

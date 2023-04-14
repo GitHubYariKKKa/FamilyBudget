@@ -41,13 +41,13 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint());
 
         http.csrf().disable();
-
+        http.cors();
         http.httpBasic().disable();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/api/auth/login","/api/users/create").permitAll()
+                .antMatchers("/api/auth/login","/users/create/user").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
