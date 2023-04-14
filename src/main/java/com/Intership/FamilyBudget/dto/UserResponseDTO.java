@@ -29,7 +29,7 @@ public class UserResponseDTO {
     private String address;
 
     private String phoneNumber;
-    private Role role;
+    private String role;
 
     private Family family;
 
@@ -42,7 +42,7 @@ public class UserResponseDTO {
         lastName = user.getLastName();
         email = user.getEmail();
         budget = user.getBudget();
-        role = user.getRole();
+        role = user.getRole().getRole();
         address = user.getAddress();
         phoneNumber = user.getPhoneNumber();
         family = user.getFamily();

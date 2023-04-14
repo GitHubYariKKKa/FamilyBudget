@@ -11,10 +11,14 @@ import lombok.NoArgsConstructor;
 public class FamilyRequestDTO {
     private String name;
     private int budget;
+    private int actualBudget;
+
+    private int createdBy;
 
     public FamilyRequestDTO(Family family){
         name = family.getName();
         budget = family.getBudget();
+        actualBudget = family.getActualBudget();
     }
 
     @Override
