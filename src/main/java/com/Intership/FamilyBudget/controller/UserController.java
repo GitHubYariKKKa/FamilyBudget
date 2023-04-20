@@ -172,7 +172,7 @@ public class UserController {
     @GetMapping({"/{family_id}/spending"})
     public ResponseEntity<List<SortedUsersBySpendingDTO>> getUsersAndSpending(@PathVariable(value = "family_id") int id){
         LocalDate startDate = LocalDate.now();
-        LocalDate endDate = LocalDate.now().minusDays(10);
+        LocalDate endDate = LocalDate.now().minusDays(30);
         List<SortedUsersBySpendingDTO> spendPerDayDTOs = userService.getSortedUsersBySpending(startDate,endDate,id);
         if (spendPerDayDTOs.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

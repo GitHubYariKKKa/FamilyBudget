@@ -76,7 +76,7 @@ public class ShoppingHistoryServiceImpl implements ShoppingHistoryService {
     @Override
     public List<SpendPerDayDTO> getUsersSpendingPerDayStatistic(int user_id) {
         LocalDate endDate = LocalDate.now();
-        LocalDate startDate = LocalDate.now().minusDays(7);
+        LocalDate startDate = LocalDate.now().minusDays(30);
         List<SpendPerDayDTO> spendPerDayDTOs = shoppingHistoryRepository.findUserSendingPerDay(user_id,startDate,endDate);
         return spendPerDayDTOs.isEmpty() ? new ArrayList<>() : spendPerDayDTOs;
     }
